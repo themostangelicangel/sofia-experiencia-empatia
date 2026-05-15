@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sofía — Una Experiencia de Empatía</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Crimson+Text:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0e14;
+  --bg-deep:#050709;
+  --hope:#6abf8a;
+  --hope-dim:#4e9670;
+  --dim:#8a9aa3;
+  --warm:#e8d4b8;
+}
+html,body{height:100%;overflow:hidden}
+body{
+  background:var(--bg);
+  color:var(--warm);
+  font-family:'DM Sans',sans-serif;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:100vh;
+  cursor:pointer;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:radial-gradient(ellipse at center, #1a2229 0%, var(--bg) 50%, var(--bg-deep) 100%);
+  z-index:0;
+  animation:bgFade 4s ease-out forwards;
+}
+@keyframes bgFade{
+  from{opacity:0}
+  to{opacity:1}
+}
+
+/* Floating decorations */
+.deco{
+  position:fixed;
+  pointer-events:none;
+  font-size:1.4rem;
+  opacity:0;
+  animation:fadeDeco 2s ease-in forwards 2s, floatDeco 8s ease-in-out infinite 4s;
+}
+@keyframes fadeDeco{
+  to{opacity:.35}
+}
+@keyframes floatDeco{
+  0%,100%{transform:translateY(0) rotate(0deg)}
+  50%{transform:translateY(-20px) rotate(8deg)}
+}
+.deco.d1{top:18%;left:12%;color:var(--hope)}
+.deco.d2{top:30%;right:14%;color:var(--warm);animation-delay:2.3s,4.5s;font-size:1.1rem}
+.deco.d3{bottom:25%;left:18%;color:var(--hope-dim);animation-delay:2.6s,5s}
+.deco.d4{bottom:32%;right:12%;color:var(--warm);animation-delay:2.9s,5.5s;font-size:1.2rem}
+.deco.d5{top:50%;left:6%;color:var(--hope);animation-delay:3s,6s;font-size:.9rem}
+.deco.d6{top:45%;right:7%;color:var(--warm);animation-delay:3.2s,6.5s;font-size:1rem}
+
+/* Center stack */
+.stack{
+  position:relative;
+  z-index:2;
+  text-align:center;
+  padding:0 20px;
+  max-width:720px;
+}
+
+.butterfly{
+  font-size:3.5rem;
+  display:block;
+  margin:0 auto 28px;
+  opacity:0;
+  animation:butterflyIn 2s ease-out forwards .8s;
+  filter:drop-shadow(0 0 20px rgba(106,191,138,.3));
+}
+@keyframes butterflyIn{
+  from{opacity:0;transform:translateY(20px) scale(.7)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+
+h1{
+  font-family:'DM Sans',sans-serif;
+  font-size:clamp(3.5rem, 12vw, 6.5rem);
+  font-weight:700;
+  letter-spacing:.05em;
+  color:var(--warm);
+  text-shadow:0 0 30px rgba(232,212,184,.3), 0 0 60px rgba(106,191,138,.15);
+  margin-bottom:14px;
+  opacity:0;
+  animation:titleIn 2.5s ease-out forwards 1.8s;
+}
+@keyframes titleIn{
+  from{opacity:0;transform:translateY(30px);letter-spacing:.3em}
+  to{opacity:1;transform:translateY(0);letter-spacing:.05em}
+}
+
+.sub{
+  font-family:'Crimson Text',serif;
+  font-style:italic;
+  font-size:clamp(1.2rem, 3vw, 1.6rem);
+  color:var(--hope);
+  letter-spacing:.04em;
+  margin-bottom:60px;
+  opacity:0;
+  animation:fadeIn 2s ease-out forwards 3.2s;
+}
+@keyframes fadeIn{
+  from{opacity:0;transform:translateY(15px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.tagline{
+  font-family:'Crimson Text',serif;
+  font-size:clamp(1.05rem, 2.5vw, 1.35rem);
+  color:var(--dim);
+  line-height:1.8;
+  margin-bottom:50px;
+  opacity:0;
+  animation:fadeIn 2.5s ease-out forwards 4.5s;
+}
+.tagline .line{display:block}
+.tagline .accent{color:var(--warm);font-style:italic}
+
+.cta-area{
+  opacity:0;
+  animation:fadeIn 2s ease-out forwards 6.5s;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+}
+.btn-start{
+  background:transparent;
+  border:2px solid var(--hope);
+  color:var(--hope);
+  font-family:'DM Sans',sans-serif;
+  font-size:.85rem;
+  font-weight:600;
+  padding:14px 38px;
+  letter-spacing:.25em;
+  cursor:pointer;
+  border-radius:4px;
+  text-decoration:none;
+  text-transform:uppercase;
+  transition:all .3s;
+  display:inline-block;
+  position:relative;
+  overflow:hidden;
+}
+.btn-start::before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:var(--hope);
+  transform:translateX(-100%);
+  transition:transform .35s;
+}
+.btn-start:hover{color:var(--bg);text-shadow:none;box-shadow:0 4px 20px rgba(106,191,138,.25)}
+.btn-start:hover::before{transform:translateX(0)}
+.btn-start span{position:relative;z-index:1}
+.hint{
+  font-family:'DM Sans',sans-serif;
+  font-size:.7rem;
+  color:var(--dim);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  margin-top:14px;
+  opacity:.7;
+  animation:pulse 2.5s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:.4}
+  50%{opacity:.8}
+}
+
+/* Subtle frame */
+.frame-corner{
+  position:fixed;
+  width:60px;
+  height:60px;
+  border-color:rgba(232,212,184,.15);
+  opacity:0;
+  animation:fadeIn 3s ease-out forwards 1s;
+}
+.frame-corner.tl{top:30px;left:30px;border-top:2px solid;border-left:2px solid}
+.frame-corner.tr{top:30px;right:30px;border-top:2px solid;border-right:2px solid}
+.frame-corner.bl{bottom:30px;left:30px;border-bottom:2px solid;border-left:2px solid}
+.frame-corner.br{bottom:30px;right:30px;border-bottom:2px solid;border-right:2px solid}
+
+@media(max-width:600px){
+  .frame-corner{width:40px;height:40px}
+  .frame-corner.tl,.frame-corner.tr{top:15px}
+  .frame-corner.bl,.frame-corner.br{bottom:15px}
+  .frame-corner.tl,.frame-corner.bl{left:15px}
+  .frame-corner.tr,.frame-corner.br{right:15px}
+}
+</style>
+</head>
+<body>
+
+<div class="frame-corner tl"></div>
+<div class="frame-corner tr"></div>
+<div class="frame-corner bl"></div>
+<div class="frame-corner br"></div>
+
+<div class="deco d1">✦</div>
+<div class="deco d2">♡</div>
+<div class="deco d3">★</div>
+<div class="deco d4">✦</div>
+<div class="deco d5">♡</div>
+<div class="deco d6">★</div>
+
+<div class="stack">
+  <span class="butterfly">🦋</span>
+  <h1>Sofía</h1>
+  <div class="sub">Una Experiencia de Empatía</div>
+  <div class="tagline">
+    <span class="line">Tres mujeres. Tres países.</span>
+    <span class="line accent">Un mismo dolor.</span>
+  </div>
+  <div class="cta-area">
+    <a href="s1.html" class="btn-start"><span>▶ Comenzar</span></a>
+    <div class="hint">o pulsa cualquier lugar</div>
+  </div>
+</div>
+
+<script>
+// Track that we visited the title (for save system continuity)
+try {
+  localStorage.setItem("sofia_current_scene", "title");
+} catch(e) {}
+
+// Allow click anywhere (after a delay to prevent accidental skip)
+let skipReady = false;
+setTimeout(() => { skipReady = true; }, 2000);
+
+function go() {
+  if (!skipReady) return;
+  document.body.style.transition = "opacity .5s";
+  document.body.style.opacity = "0";
+  setTimeout(() => { location.href = "s1.html"; }, 500);
+}
+
+document.body.addEventListener("click", (e) => {
+  // Don't trigger if they clicked the actual button (it has its own link)
+  if (e.target.closest(".btn-start")) return;
+  go();
+});
+
+// Also allow space/enter/escape to start
+document.addEventListener("keydown", (e) => {
+  if (["Enter", " ", "Escape"].includes(e.key)) {
+    e.preventDefault();
+    go();
+  }
+});
+</script>
+</body>
+</html>

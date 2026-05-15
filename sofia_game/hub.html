@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sofía — Una Experiencia de Empatía</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@400;600&family=Crimson+Text:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#110e16;
+  --card:rgba(22,18,28,.95);
+  --gold:#d4a574;
+  --gold2:#b8895a;
+  --hope:#6abf8a;
+  --pain:#c45c4b;
+  --text:#ece8e2;
+  --dim:#9a9590;
+  --dim2:#6a6560;
+}
+html,body{width:100%;min-height:100vh;background:var(--bg);color:var(--text);font-family:'Crimson Text',Georgia,serif;overflow-x:hidden}
+body{
+  background-image:
+    radial-gradient(ellipse at 20% 10%,rgba(139,80,60,.08) 0%,transparent 55%),
+    radial-gradient(ellipse at 80% 80%,rgba(106,191,138,.05) 0%,transparent 55%);
+  background-attachment:fixed;
+}
+
+/* Floating butterfly */
+.flutter{position:fixed;font-size:1.4rem;opacity:.3;pointer-events:none;animation:flutter 8s ease-in-out infinite;z-index:2}
+@keyframes flutter{
+  0%,100%{transform:translateY(0) rotate(-5deg)}
+  50%{transform:translateY(-20px) rotate(8deg)}
+}
+
+.container{max-width:900px;margin:0 auto;padding:50px 24px 80px;position:relative;z-index:3}
+
+/* HERO */
+.hero{text-align:center;padding:40px 20px 60px}
+.hero-eyebrow{
+  font-family:'Press Start 2P',monospace;
+  font-size:.6rem;
+  color:var(--gold);
+  letter-spacing:.3em;
+  margin-bottom:1.2rem;
+  opacity:.8;
+}
+.hero h1{
+  font-family:'Playfair Display','Crimson Text',serif;
+  font-size:clamp(3rem,8vw,5.5rem);
+  color:var(--gold);
+  font-weight:400;
+  letter-spacing:.06em;
+  line-height:1;
+  margin-bottom:.5rem;
+}
+.hero-sub{
+  font-family:'Caveat',cursive;
+  font-size:clamp(1.2rem,2.5vw,1.6rem);
+  color:var(--dim);
+  font-style:italic;
+  margin-bottom:1.5rem;
+}
+.divider{
+  width:80px;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  margin:1.5rem auto;
+}
+.hero-desc{
+  max-width:520px;
+  margin:0 auto 2rem;
+  color:var(--dim);
+  font-size:1.05rem;
+  line-height:1.8;
+}
+
+/* STATUS BANNER */
+.status-banner{
+  max-width:560px;margin:0 auto 2.5rem;
+  background:rgba(22,18,28,.6);
+  border:1px solid rgba(212,165,116,.15);
+  border-radius:12px;
+  padding:20px 24px;
+  display:none;
+}
+.status-banner.show{display:block}
+.status-banner.resume{border-left:3px solid var(--hope)}
+.status-banner.complete{border-left:3px solid var(--gold);background:rgba(106,191,138,.06)}
+.status-head{
+  font-family:'DM Sans',sans-serif;
+  font-size:.7rem;
+  color:var(--gold);
+  letter-spacing:.15em;
+  text-transform:uppercase;
+  margin-bottom:8px;
+  font-weight:600;
+}
+.status-text{color:var(--text);font-size:1rem;line-height:1.6;margin-bottom:14px}
+.status-actions{display:flex;gap:10px;flex-wrap:wrap}
+
+/* BUTTONS */
+.btn{
+  display:inline-block;
+  padding:12px 28px;
+  font-family:'DM Sans',sans-serif;
+  font-size:.8rem;
+  font-weight:600;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  text-decoration:none;
+  border-radius:4px;
+  cursor:pointer;
+  border:none;
+  transition:all .2s;
+}
+.btn-primary{
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:var(--bg);
+}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(212,165,116,.25)}
+.btn-secondary{
+  background:transparent;
+  color:var(--gold);
+  border:1px solid rgba(212,165,116,.3);
+}
+.btn-secondary:hover{background:rgba(212,165,116,.08);border-color:var(--gold)}
+.btn-danger{
+  background:transparent;
+  color:var(--dim);
+  border:1px solid rgba(154,149,144,.2);
+}
+.btn-danger:hover{color:var(--pain);border-color:var(--pain)}
+
+/* CHAPTERS */
+.chapters{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  gap:16px;
+  margin-top:1rem;
+}
+.chapter{
+  background:rgba(22,18,28,.5);
+  border:1px solid rgba(212,165,116,.08);
+  border-radius:10px;
+  padding:20px;
+  position:relative;
+  transition:all .25s;
+  cursor:pointer;
+  display:block;
+  text-decoration:none;
+  color:inherit;
+}
+.chapter:hover{
+  border-color:rgba(212,165,116,.4);
+  transform:translateY(-2px);
+  box-shadow:0 8px 24px rgba(0,0,0,.3);
+}
+.chapter.locked{opacity:.4;pointer-events:none}
+.chapter.current{
+  border-color:var(--hope);
+  background:rgba(106,191,138,.06);
+  box-shadow:0 0 0 2px rgba(106,191,138,.15);
+}
+.chapter.complete{
+  border-color:rgba(106,191,138,.25);
+}
+.ch-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.ch-num{
+  font-family:'Press Start 2P',monospace;
+  font-size:.6rem;
+  color:var(--gold);
+  letter-spacing:.1em;
+}
+.chapter.goldie .ch-num{color:var(--hope)}
+.ch-badge{
+  font-family:'DM Sans',sans-serif;
+  font-size:.55rem;
+  padding:3px 8px;
+  border-radius:8px;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  font-weight:600;
+}
+.badge-current{background:rgba(106,191,138,.15);color:var(--hope);border:1px solid rgba(106,191,138,.3)}
+.badge-done{background:rgba(212,165,116,.1);color:var(--gold);border:1px solid rgba(212,165,116,.2)}
+.badge-locked{background:rgba(154,149,144,.08);color:var(--dim);border:1px solid rgba(154,149,144,.15)}
+.ch-title{
+  font-family:'Playfair Display','Crimson Text',serif;
+  font-size:1.25rem;
+  color:var(--text);
+  margin-bottom:4px;
+  font-weight:400;
+}
+.ch-desc{color:var(--dim);font-size:.9rem;font-style:italic;line-height:1.5}
+.ch-checkmark{
+  position:absolute;
+  top:12px;right:12px;
+  color:var(--hope);
+  font-size:1rem;
+  opacity:0;
+}
+.chapter.complete .ch-checkmark{opacity:1}
+
+/* PROGRESS BAR */
+.progress-wrap{
+  max-width:560px;margin:0 auto 1.5rem;
+}
+.progress-label{
+  display:flex;justify-content:space-between;
+  font-family:'DM Sans',sans-serif;
+  font-size:.7rem;color:var(--dim);
+  letter-spacing:.1em;text-transform:uppercase;
+  margin-bottom:8px;
+}
+.progress-bar{
+  height:6px;
+  background:rgba(212,165,116,.1);
+  border-radius:3px;
+  overflow:hidden;
+}
+.progress-fill{
+  height:100%;
+  background:linear-gradient(90deg,var(--gold),var(--hope));
+  border-radius:3px;
+  transition:width 1s ease;
+}
+
+/* SECTION HEADERS */
+.section-head{
+  font-family:'Press Start 2P',monospace;
+  font-size:.65rem;
+  color:var(--gold);
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  margin:2.5rem 0 1rem;
+  text-align:center;
+  opacity:.85;
+}
+
+/* TRIGGER WARNING / NOTE */
+.note-box{
+  max-width:560px;margin:2rem auto;
+  background:rgba(22,18,28,.4);
+  border:1px solid rgba(212,165,116,.1);
+  border-left:3px solid var(--gold2);
+  border-radius:8px;
+  padding:16px 20px;
+}
+.note-title{
+  font-family:'DM Sans',sans-serif;
+  font-size:.7rem;
+  color:var(--gold);
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  margin-bottom:6px;
+  font-weight:600;
+}
+.note-text{color:var(--dim);font-size:.9rem;line-height:1.6}
+
+/* FOOTER */
+footer{
+  text-align:center;
+  padding:40px 20px;
+  border-top:1px solid rgba(212,165,116,.06);
+  margin-top:4rem;
+}
+footer .quote{
+  font-family:'Caveat',cursive;
+  font-size:1.2rem;
+  color:var(--gold);
+  margin-bottom:6px;
+}
+footer .fine{
+  font-family:'DM Sans',sans-serif;
+  font-size:.7rem;
+  color:var(--dim2);
+  letter-spacing:.1em;
+}
+
+/* COMPLETION ANIMATION */
+@keyframes sparkle{
+  0%,100%{opacity:.3;transform:scale(1)}
+  50%{opacity:1;transform:scale(1.2)}
+}
+.finished-badge{
+  display:inline-block;
+  font-size:2rem;
+  animation:sparkle 2s ease-in-out infinite;
+  margin-right:8px;
+}
+
+@media(max-width:640px){
+  .chapters{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="flutter" style="top:15%;left:8%">🦋</div>
+<div class="flutter" style="top:60%;right:10%;animation-delay:3s">🦋</div>
+
+<div class="container">
+  <div class="hero">
+    <div class="hero-eyebrow">SOFÍA.EXE</div>
+    <h1>Sofía</h1>
+    <div class="hero-sub">♡ una experiencia de empatía ♡</div>
+    <div class="divider"></div>
+    <p class="hero-desc">
+      Un juego sobre endometriosis, misoginia médica y las mujeres que el sistema ignora. Tu progreso se guarda automáticamente en este dispositivo — puedes cerrar el juego y volver cuando quieras.
+    </p>
+  </div>
+
+  <!-- DYNAMIC STATUS BANNER -->
+  <div id="statusBanner" class="status-banner"></div>
+
+  <!-- PROGRESS BAR -->
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Progreso</span>
+      <span id="progressText">0 de 7</span>
+    </div>
+    <div class="progress-bar">
+      <div id="progressFill" class="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <div class="section-head">~ selecciona un capítulo ~</div>
+
+  <div class="chapters" id="chaptersList"></div>
+
+  <div class="note-box">
+    <div class="note-title">⚠ Advertencia de contenido</div>
+    <div class="note-text">
+      Este juego aborda temas de dolor crónico, misoginia médica, crisis de salud y trauma. Incluye descripciones intensas de dolor físico. Juega en un ambiente seguro y con las pausas que necesites. Si tú o alguien que conoces vive con dolor crónico sin diagnóstico, el final incluye recursos reales.
+    </div>
+  </div>
+
+  <div style="text-align:center;margin-top:2rem">
+    <button class="btn btn-danger" id="resetBtn" onclick="resetProgress()">⟲ Reiniciar progreso</button>
+  </div>
+</div>
+
+<footer>
+  <div class="quote">"el dolor no es normal. créele."</div>
+  <div class="fine">♡ SOFÍA · 2026 · 🦋 ♡</div>
+</footer>
+
+<script>
+const SCENES = [
+  { id:"s1", num:"01", title:"El Ensayo",          desc:"2:00 AM. El dolor no la deja dormir." },
+  { id:"s2", num:"02", title:"El Camino",          desc:"La calle. La escuela. Mateo." },
+  { id:"s3", num:"03", title:"La Sala de Espera",  desc:"Dos horas. Diecisiete pacientes." },
+  { id:"s4", num:"04", title:"La Consulta",        desc:"Once minutos. Tres síntomas. Una receta." },
+  { id:"s5", num:"05", title:"Las Consecuencias",  desc:"Todo se derrumba despacio." },
+  { id:"s6", num:"06", title:"La Crisis",          desc:"Hoy es el día que todo se rompe." },
+  { id:"gd", num:"✦",  title:"El Regreso",         desc:"¿Y si hay otra forma?", goldie:true },
+];
+
+function getProgress() {
+  try {
+    return JSON.parse(localStorage.getItem("sofia_progress") || "[]");
+  } catch { return []; }
+}
+
+function getCurrentScene() {
+  try {
+    return localStorage.getItem("sofia_current_scene");
+  } catch { return null; }
+}
+
+function isCompleted() {
+  try {
+    return localStorage.getItem("sofia_completed") === "true";
+  } catch { return false; }
+}
+
+// Handle URL params — coming back from a scene completion
+const params = new URLSearchParams(window.location.search);
+const nextScene = params.get("next");
+const finished = params.get("finished");
+
+// If we have a "next" param, auto-navigate after a brief moment
+if (nextScene) {
+  // Clean the URL
+  history.replaceState({}, "", window.location.pathname);
+  // Auto-advance
+  setTimeout(() => { window.location.href = nextScene + ".html"; }, 800);
+}
+
+function render() {
+  const progress = getProgress();
+  const current = getCurrentScene();
+  const done = isCompleted();
+
+  // Update progress bar
+  const pct = Math.round((progress.length / SCENES.length) * 100);
+  document.getElementById("progressFill").style.width = pct + "%";
+  document.getElementById("progressText").textContent = `${progress.length} de ${SCENES.length}`;
+
+  // Status banner
+  const banner = document.getElementById("statusBanner");
+  if (done) {
+    banner.className = "status-banner show complete";
+    banner.innerHTML = `
+      <div class="status-head">🦋 JUEGO COMPLETADO 🦋</div>
+      <div class="status-text">Has terminado la experiencia de Sofía. Puedes volver a jugar cualquier capítulo en cualquier momento.</div>
+      <div class="status-actions">
+        <a href="title.html" class="btn btn-primary">▶ Volver al inicio</a>
+      </div>
+    `;
+  } else if (progress.length > 0 && current) {
+    const curScene = SCENES.find(s => s.id === current);
+    // Check if just completed a chapter (set by the scene's Continuar button)
+  let justCompleted = null;
+  try {
+    const jc = localStorage.getItem("sofia_completed_chapter");
+    if (jc) {
+      justCompleted = SCENES.find(s => s.id === jc);
+      localStorage.removeItem("sofia_completed_chapter"); // consume it
+    }
+  } catch(e) {}
+
+  if (done) {
+    banner.className = "status-banner show resume";
+    banner.innerHTML = `
+      <div class="status-head">🦋 JUEGO COMPLETADO 🦋</div>
+      <div class="status-text">Has terminado la experiencia de Sofía. Puedes volver a jugar cualquier capítulo en cualquier momento.</div>
+      <div class="status-actions">
+        <a href="title.html" class="btn btn-primary">▶ Volver al inicio</a>
+      </div>
+    `;
+  } else if (justCompleted) {
+    // The player just finished a chapter — celebrate, then point to next
+    const nextScene = SCENES.find(s => s.id === current);
+    const nextLabel = nextScene
+      ? (nextScene.goldie ? `▶ Continuar — ${nextScene.title} (Acto II)` : `▶ Capítulo ${nextScene.num}: ${nextScene.title}`)
+      : "▶ Continuar";
+    banner.className = "status-banner show resume";
+    banner.innerHTML = `
+      <div class="status-head">✦ CAPÍTULO COMPLETADO ✦</div>
+      <div class="status-text">Acabas de terminar: <strong>${justCompleted.title}</strong>. ${nextScene ? "Cuando estés lista, continúa con el siguiente." : ""}</div>
+      <div class="status-actions">
+        ${nextScene ? `<a href="${nextScene.id}.html" class="btn btn-primary">${nextLabel}</a>` : ""}
+        <a href="title.html" class="btn btn-secondary">↻ Empezar de nuevo</a>
+      </div>
+    `;
+  } else if (curScene) {
+      banner.className = "status-banner show resume";
+      banner.innerHTML = `
+        <div class="status-head">▸ CONTINUAR DESDE DONDE LO DEJASTE</div>
+        <div class="status-text">Último capítulo visitado: <strong>${curScene.title}</strong></div>
+        <div class="status-actions">
+          <a href="${current}.html" class="btn btn-primary">▶ Continuar</a>
+          <a href="title.html" class="btn btn-secondary">↻ Empezar de nuevo</a>
+        </div>
+      `;
+    }
+  } else {
+    banner.className = "status-banner show";
+    banner.innerHTML = `
+      <div class="status-head">▸ EMPEZAR EL JUEGO</div>
+      <div class="status-text">Duración aproximada: 45-60 minutos. Tu progreso se guardará automáticamente.</div>
+      <div class="status-actions">
+        <a href="title.html" class="btn btn-primary">▶ Comenzar</a>
+      </div>
+    `;
+  }
+
+  // Render chapters
+  const list = document.getElementById("chaptersList");
+  list.innerHTML = "";
+  SCENES.forEach((s, i) => {
+    const isDone = progress.includes(s.id);
+    const isCurrent = s.id === current && !isDone;
+    // Unlock if previous scene is done OR this is scene 1 OR user has visited it before
+    const prevDone = i === 0 || progress.includes(SCENES[i-1].id);
+    const isLocked = !prevDone && !isDone;
+
+    const classes = ["chapter"];
+    if (s.goldie) classes.push("goldie");
+    if (isDone) classes.push("complete");
+    if (isCurrent) classes.push("current");
+    if (isLocked) classes.push("locked");
+
+    let badge = "";
+    if (isCurrent) badge = '<span class="ch-badge badge-current">Actual</span>';
+    else if (isDone) badge = '<span class="ch-badge badge-done">Completo</span>';
+    else if (isLocked) badge = '<span class="ch-badge badge-locked">🔒 Bloqueado</span>';
+
+    const chapter = document.createElement(isLocked ? "div" : "a");
+    if (!isLocked) chapter.href = s.id + ".html";
+    chapter.className = classes.join(" ");
+    chapter.innerHTML = `
+      <div class="ch-checkmark">✓</div>
+      <div class="ch-top">
+        <div class="ch-num">${s.num}</div>
+        ${badge}
+      </div>
+      <div class="ch-title">${s.title}</div>
+      <div class="ch-desc">${s.desc}</div>
+    `;
+    list.appendChild(chapter);
+  });
+}
+
+function resetProgress() {
+  if (!confirm("¿Estás segura? Esto borrará tu progreso guardado y empezarás desde el principio.")) return;
+  try {
+    localStorage.removeItem("sofia_progress");
+    localStorage.removeItem("sofia_current_scene");
+    localStorage.removeItem("sofia_completed");
+  } catch {}
+  render();
+}
+
+render();
+</script>
+</body>
+</html>
